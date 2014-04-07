@@ -44,7 +44,12 @@ static int sock;
 static pthread_t rtp_thread;
 
 static void *rtp_receiver(void *arg) {
-    // we inherit the signal mask (SIGUSR1)
+    // SIGUSR1 is used to interrupt this thread if blocked for read
+    sigset_t set;
+    sigemptyset(&set);
+    sigaddset(&set, SIGUSR1);
+    pthread_sigmask(SIG_UNBLOCK, &set, NULL);
+
     uint8_t packet[2048], *pktp;
 
     ssize_t nread;
