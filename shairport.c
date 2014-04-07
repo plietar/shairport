@@ -35,6 +35,7 @@
 #include "common.h"
 #include "daemon.h"
 #include "rtsp.h"
+#include "rtsp_server.h"
 #include "mdns.h"
 #include "getopt_long.h"
 
