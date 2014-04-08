@@ -11,8 +11,8 @@ CFLAGS ?= -O2
 PREFIX ?= /usr/local
 
 
-SRCS := shairport.c daemon.c rtsp.c rtsp_server.c mdns.c mdns_external.c mdns_tinysvcmdns.c common.c rtp.c player.c alac.c audio.c audio_dummy.c audio_pipe.c tinysvcmdns.c
-DEPS := config.mk alac.h audio.h common.h daemon.h getopt_long.h mdns.h player.h rtp.h rtsp.h tinysvcmdns.h
+SRCS := shairport.c daemon.c rtsp.c rtsp_server.c modes.c mdns.c mdns_external.c mdns_tinysvcmdns.c common.c rtp.c player.c alac.c audio.c audio_dummy.c audio_pipe.c tinysvcmdns.c
+DEPS := config.mk alac.h audio.h common.h daemon.h getopt_long.h mdns.h player.h rtp.h rtsp.h rtsp_server.h modes.h tinysvcmdns.h
 
 ifdef CONFIG_SNDIO
 SRCS += audio_sndio.c

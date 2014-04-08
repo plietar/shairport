@@ -48,10 +48,10 @@ void shairport_shutdown(int retval) {
         return;
     shutting_down = 1;
     printf("Shutting down...\n");
-    mdns_unregister();
-    rtsp_shutdown_stream();
     if (config.output)
         config.output->deinit();
+    if (config.mode)
+         config.mode->deinit();
     daemon_exit(); // This does nothing if not in daemon mode
 
     exit(retval);
@@ -272,6 +272,9 @@ int main(int argc, char **argv) {
     config.apname = malloc(20 + 100);
     snprintf(config.apname, 20 + 100, "Shairport on %s", hostname);
 
+    config.mode = mode_find(&argc, &argv);
+    if (config.mode->init) config.mode->init();
+
     // parse arguments into config
     int audio_arg = parse_options(argc, argv);
 
@@ -299,10 +302,10 @@ int main(int argc, char **argv) {
     MD5_Final(ap_md5, &ctx);
     memcpy(config.hw_addr, ap_md5, sizeof(config.hw_addr));
 
-
-    rtsp_listen_loop();
+    config.mode->run();
 
     // should not.
-    shairport_shutdown(1);
-    return 1;
+    shairport_shutdown(0);
+    return 0;
 }
+
